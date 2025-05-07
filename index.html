@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Login</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body class="min-h-screen bg-white">
+		<div
+			class="flex min-h-screen items-center justify-center p-6 md:p-10">
+			<div class="w-full max-w-sm">
+				<div
+					class="card bg-white text-gray-900 flex flex-col gap-6 rounded-xl border border-gray-200 shadow-sm p-6">
+					<div class="card-header grid gap-1.5">
+						<h1 class="card-title text-lg font-semibold">
+							Login to your account
+						</h1>
+						<p class="card-description text-gray-500 text-sm">
+							Enter your email below to login to your account
+						</p>
+					</div>
+
+					<div class="card-content">
+						<form class="space-y-4">
+							<div class="space-y-4">
+								<div class="grid gap-3">
+									<label
+										for="email"
+										class="text-sm font-medium text-gray-900">
+										Email
+									</label>
+									<input
+										class="border-input flex h-9 w-full rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+										id="email"
+										type="email"
+										placeholder="m@example.com"
+										required />
+								</div>
+
+								<div class="grid gap-3">
+									<div class="flex items-center">
+										<label
+											for="password"
+											class="text-sm font-medium text-gray-900">
+											Password
+										</label>
+										<a
+											href="#"
+											class="card-action ml-auto text-sm text-blue-600 hover:underline">
+											Forgot password?
+										</a>
+									</div>
+									<input
+										class="border-input flex h-9 w-full rounded-md border border-gray-300 bg-white px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+										id="password"
+										type="password"
+										required />
+								</div>
+
+								<div class="flex flex-col gap-3">
+									<button
+										type="submit"
+										class="bg-primary text-primary-foreground inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-blue-600 text-white hover:bg-blue-700 h-9 px-4 py-2 w-full">
+										Login
+									</button>
+									<button
+										type="button"
+										class="border-input inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 bg-white hover:bg-gray-100 h-9 px-4 py-2 w-full">
+										Login with Google
+									</button>
+								</div>
+							</div>
+
+							<div
+								class="card-footer mt-4 text-center text-sm text-gray-600">
+								Don't have an account?&nbsp;
+								<a
+									href="#"
+									class="text-blue-600 hover:underline">
+									Sign up
+								</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Dashboard</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://unpkg.com/lucide@latest"></script>
+		<script>
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						transitionProperty: {
+							width: "width",
+							spacing: "margin, padding",
+						},
+						colors: {
+							primary: {
+								DEFAULT: "hsl(var(--primary))",
+								foreground: "hsl(var(--primary-foreground))",
+							},
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			[data-state="open"] .sidebar-overlay {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			.sidebar-overlay {
+				transition: opacity 0.2s ease;
+			}
+			.sidebar-content {
+				transition: transform 0.2s ease;
+			}
+			[data-state="closed"] .sidebar-content {
+				transform: translateX(-100%);
+			}
+			.chart-area-desktop {
+				--color-desktop: hsl(var(--primary));
+				--color-mobile: hsl(var(--primary));
+			}
+		</style>
+	</head>
+	<body
+		class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50">
+		<div class="flex h-screen overflow-hidden">
+			<!-- Mobile Sidebar Overlay -->
+			<div
+				class="sidebar-overlay fixed inset-0 z-40 bg-black/50 opacity-0 pointer-events-none lg:hidden"></div>
+
+			<!-- Sidebar -->
+			<div
+				class="sidebar-content fixed z-50 h-full w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 lg:relative lg:z-auto">
+				<div class="flex h-full flex-col">
+					<!-- Sidebar Header -->
+					<div
+						class="flex h-16 items-center px-4 border-b border-gray-200 dark:border-gray-800">
+						<a
+							href="#"
+							class="flex items-center gap-2 p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+							<i
+								data-lucide="arrow-up-circle"
+								class="h-5 w-5"></i>
+							<span class="text-base font-semibold"
+								>Acme Inc.</span
+							>
+						</a>
+					</div>
+
+					<!-- Sidebar Content -->
+					<div class="flex-1 overflow-y-auto px-2 py-4">
+						<!-- Main Navigation -->
+						<nav class="space-y-1">
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50">
+								<i
+									data-lucide="layout-dashboard"
+									class="h-5 w-5"></i>
+								<span>Dashboard</span>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i data-lucide="list" class="h-5 w-5"></i>
+								<span>Lifecycle</span>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i
+									data-lucide="bar-chart"
+									class="h-5 w-5"></i>
+								<span>Analytics</span>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i data-lucide="folder" class="h-5 w-5"></i>
+								<span>Projects</span>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i data-lucide="users" class="h-5 w-5"></i>
+								<span>Team</span>
+							</a>
+						</nav>
+
+						<!-- Documents Section -->
+						<div class="mt-8">
+							<p
+								class="px-3 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">
+								Documents
+							</p>
+							<nav class="mt-2 space-y-1">
+								<a
+									href="#"
+									class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+									<i
+										data-lucide="database"
+										class="h-5 w-5"></i>
+									<span>Data Library</span>
+								</a>
+								<a
+									href="#"
+									class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+									<i
+										data-lucide="clipboard-list"
+										class="h-5 w-5"></i>
+									<span>Reports</span>
+								</a>
+								<a
+									href="#"
+									class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+									<i data-lucide="file" class="h-5 w-5"></i>
+									<span>Word Assistant</span>
+								</a>
+							</nav>
+						</div>
+
+						<!-- Secondary Navigation -->
+						<nav class="mt-auto pt-8 space-y-1">
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i data-lucide="settings" class="h-5 w-5"></i>
+								<span>Settings</span>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i
+									data-lucide="help-circle"
+									class="h-5 w-5"></i>
+								<span>Get Help</span>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i data-lucide="search" class="h-5 w-5"></i>
+								<span>Search</span>
+							</a>
+						</nav>
+					</div>
+
+					<!-- User Profile -->
+					<div
+						class="p-4 border-t border-gray-200 dark:border-gray-800">
+						<div class="relative">
+							<button
+								id="user-menu-button"
+								class="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<span
+									class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center"
+									>U</span
+								>
+								<div class="grid flex-1 text-left">
+									<span class="truncate font-semibold"
+										>User Name</span
+									>
+									<span
+										class="truncate text-xs text-gray-500 dark:text-gray-400"
+										>user@example.com</span
+									>
+								</div>
+								<i
+									data-lucide="chevrons-up-down"
+									class="ml-auto size-4"></i>
+							</button>
+
+							<!-- Dropdown Menu -->
+							<div
+								id="user-menu"
+								class="hidden absolute bottom-full mb-2 left-0 w-full min-w-56 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900 z-10">
+								<div class="p-2">
+									<div
+										class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+										<span
+											class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center"
+											>U</span
+										>
+										<div
+											class="grid flex-1 text-left text-sm leading-tight">
+											<span class="truncate font-semibold"
+												>User Name</span
+											>
+											<span
+												class="truncate text-xs text-gray-500 dark:text-gray-400"
+												>user@example.com</span
+											>
+										</div>
+									</div>
+								</div>
+								<div
+									class="h-px bg-gray-200 dark:bg-gray-800"></div>
+								<div class="p-1">
+									<div class="py-1">
+										<a
+											href="#"
+											class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+											<i
+												data-lucide="sparkles"
+												class="size-4"></i>
+											Upgrade to Pro
+										</a>
+									</div>
+								</div>
+								<div
+									class="h-px bg-gray-200 dark:bg-gray-800"></div>
+								<div class="p-1">
+									<div class="py-1">
+										<a
+											href="#"
+											class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+											<i
+												data-lucide="badge-check"
+												class="size-4"></i>
+											Account
+										</a>
+										<a
+											href="#"
+											class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+											<i
+												data-lucide="credit-card"
+												class="size-4"></i>
+											Billing
+										</a>
+										<a
+											href="#"
+											class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+											<i
+												data-lucide="bell"
+												class="size-4"></i>
+											Notifications
+										</a>
+									</div>
+								</div>
+								<div
+									class="h-px bg-gray-200 dark:bg-gray-800"></div>
+								<div class="p-1">
+									<a
+										href="#"
+										class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+										<i
+											data-lucide="log-out"
+											class="size-4"></i>
+										Log out
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Main Content -->
+			<div class="flex flex-1 flex-col overflow-hidden">
+				<!-- Header -->
+				<header
+					class="flex h-16 shrink-0 items-center gap-2 border-b border-gray-200 dark:border-gray-800">
+					<div class="flex items-center gap-2 px-4">
+						<button
+							class="lg:hidden -ml-1 flex h-9 w-9 items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+							<i data-lucide="menu" class="h-5 w-5"></i>
+						</button>
+						<div
+							class="h-4 w-px bg-gray-200 dark:bg-gray-800 mr-2"></div>
+						<nav class="flex" aria-label="Breadcrumb">
+							<ol
+								class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+								<li
+									class="inline-flex items-center hidden md:block">
+									<a
+										href="#"
+										class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+										Building Your Application
+									</a>
+								</li>
+								<li class="hidden md:block">
+									<svg
+										class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"
+										aria-hidden="true"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 6 10">
+										<path
+											stroke="currentColor"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="m1 9 4-4-4-4" />
+									</svg>
+								</li>
+								<li class="inline-flex items-center">
+									<span
+										class="text-sm font-medium text-gray-500 dark:text-gray-400"
+										>Data Fetching</span
+									>
+								</li>
+							</ol>
+						</nav>
+					</div>
+				</header>
+
+				<!-- Content -->
+				<div
+					class="flex flex-1 flex-col gap-4 p-4 pt-0 overflow-y-auto">
+					<!-- Section Cards -->
+					<div
+						class="grid grid-cols-1 gap-4 px-4 lg:px-6 sm:grid-cols-2 lg:grid-cols-4">
+						<!-- Card 1 -->
+						<div
+							class="rounded-lg border bg-gradient-to-t from-primary/5 to-white dark:from-primary/10 dark:to-gray-950 shadow-xs">
+							<div class="p-6 relative">
+								<p
+									class="text-sm text-gray-500 dark:text-gray-400">
+									Total Revenue
+								</p>
+								<h3
+									class="text-2xl font-semibold tabular-nums">
+									$1,250.00
+								</h3>
+								<div class="absolute right-4 top-4">
+									<span
+										class="inline-flex items-center rounded-lg border px-2.5 py-0.5 text-xs font-semibold">
+										<i
+											data-lucide="trending-up"
+											class="mr-1 h-3 w-3"></i>
+										+12.5%
+									</span>
+								</div>
+							</div>
+							<div
+								class="border-t px-6 py-4 flex flex-col items-start gap-1 text-sm">
+								<div class="flex gap-2 font-medium">
+									Trending up this month
+									<i
+										data-lucide="trending-up"
+										class="h-4 w-4"></i>
+								</div>
+								<p class="text-gray-500 dark:text-gray-400">
+									Visitors for the last 6 months
+								</p>
+							</div>
+						</div>
+
+						<!-- Card 2 -->
+						<div
+							class="rounded-lg border bg-gradient-to-t from-primary/5 to-white dark:from-primary/10 dark:to-gray-950 shadow-xs">
+							<div class="p-6 relative">
+								<p
+									class="text-sm text-gray-500 dark:text-gray-400">
+									New Customers
+								</p>
+								<h3
+									class="text-2xl font-semibold tabular-nums">
+									1,234
+								</h3>
+								<div class="absolute right-4 top-4">
+									<span
+										class="inline-flex items-center rounded-lg border px-2.5 py-0.5 text-xs font-semibold">
+										<i
+											data-lucide="trending-down"
+											class="mr-1 h-3 w-3"></i>
+										-20%
+									</span>
+								</div>
+							</div>
+							<div
+								class="border-t px-6 py-4 flex flex-col items-start gap-1 text-sm">
+								<div class="flex gap-2 font-medium">
+									Down 20% this period
+									<i
+										data-lucide="trending-down"
+										class="h-4 w-4"></i>
+								</div>
+								<p class="text-gray-500 dark:text-gray-400">
+									Acquisition needs attention
+								</p>
+							</div>
+						</div>
+
+						<!-- Card 3 -->
+						<div
+							class="rounded-lg border bg-gradient-to-t from-primary/5 to-white dark:from-primary/10 dark:to-gray-950 shadow-xs">
+							<div class="p-6 relative">
+								<p
+									class="text-sm text-gray-500 dark:text-gray-400">
+									Active Accounts
+								</p>
+								<h3
+									class="text-2xl font-semibold tabular-nums">
+									45,678
+								</h3>
+								<div class="absolute right-4 top-4">
+									<span
+										class="inline-flex items-center rounded-lg border px-2.5 py-0.5 text-xs font-semibold">
+										<i
+											data-lucide="trending-up"
+											class="mr-1 h-3 w-3"></i>
+										+12.5%
+									</span>
+								</div>
+							</div>
+							<div
+								class="border-t px-6 py-4 flex flex-col items-start gap-1 text-sm">
+								<div class="flex gap-2 font-medium">
+									Strong user retention
+									<i
+										data-lucide="trending-up"
+										class="h-4 w-4"></i>
+								</div>
+								<p class="text-gray-500 dark:text-gray-400">
+									Engagement exceed targets
+								</p>
+							</div>
+						</div>
+
+						<!-- Card 4 -->
+						<div
+							class="rounded-lg border bg-gradient-to-t from-primary/5 to-white dark:from-primary/10 dark:to-gray-950 shadow-xs">
+							<div class="p-6 relative">
+								<p
+									class="text-sm text-gray-500 dark:text-gray-400">
+									Growth Rate
+								</p>
+								<h3
+									class="text-2xl font-semibold tabular-nums">
+									4.5%
+								</h3>
+								<div class="absolute right-4 top-4">
+									<span
+										class="inline-flex items-center rounded-lg border px-2.5 py-0.5 text-xs font-semibold">
+										<i
+											data-lucide="trending-up"
+											class="mr-1 h-3 w-3"></i>
+										+4.5%
+									</span>
+								</div>
+							</div>
+							<div
+								class="border-t px-6 py-4 flex flex-col items-start gap-1 text-sm">
+								<div class="flex gap-2 font-medium">
+									Steady performance
+									<i
+										data-lucide="trending-up"
+										class="h-4 w-4"></i>
+								</div>
+								<p class="text-gray-500 dark:text-gray-400">
+									Meets growth projections
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Chart Area -->
+					<div class="px-4 lg:px-6">
+						<div class="rounded-lg border">
+							<div class="p-6 relative">
+								<h3 class="text-lg font-semibold">
+									Total Visitors
+								</h3>
+								<p
+									class="text-sm text-gray-500 dark:text-gray-400">
+									Total for the last 3 months
+								</p>
+								<div class="absolute right-4 top-4">
+									<div class="hidden sm:flex gap-1">
+										<button
+											class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-2.5">
+											Last 3 months
+										</button>
+										<button
+											class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-2.5">
+											Last 30 days
+										</button>
+										<button
+											class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-2.5">
+											Last 7 days
+										</button>
+									</div>
+									<div class="sm:hidden">
+										<select
+											class="flex h-8 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-40">
+											<option>Last 3 months</option>
+											<option>Last 30 days</option>
+											<option>Last 7 days</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="px-6 pb-6">
+								<!-- Chart Placeholder -->
+								<div
+									class="aspect-auto h-[250px] w-full rounded bg-gray-100 dark:bg-gray-800/50"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Data Table -->
+					<div class="flex flex-col gap-6 px-4 lg:px-6">
+						<!-- Tabs -->
+						<div class="flex items-center justify-between">
+							<div class="hidden lg:flex gap-1">
+								<button
+									class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90">
+									Outline
+								</button>
+								<button
+									class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+									Past Performance
+									<span
+										class="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-xs"
+										>3</span
+									>
+								</button>
+								<button
+									class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+									Key Personnel
+									<span
+										class="ml-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-xs"
+										>2</span
+									>
+								</button>
+								<button
+									class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+									Focus Documents
+								</button>
+							</div>
+							<div class="lg:hidden">
+								<select
+									class="flex h-8 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-40">
+									<option>Outline</option>
+									<option>Past Performance</option>
+									<option>Key Personnel</option>
+									<option>Focus Documents</option>
+								</select>
+							</div>
+							<div class="flex items-center gap-2">
+								<button
+									class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3">
+									<i
+										data-lucide="columns"
+										class="mr-2 h-4 w-4"></i>
+									<span class="hidden lg:inline"
+										>Customize Columns</span
+									>
+									<span class="lg:hidden">Columns</span>
+									<i
+										data-lucide="chevron-down"
+										class="ml-2 h-4 w-4"></i>
+								</button>
+								<button
+									class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-3">
+									<i
+										data-lucide="plus"
+										class="mr-2 h-4 w-4"></i>
+									<span class="hidden lg:inline"
+										>Add Section</span
+									>
+								</button>
+							</div>
+						</div>
+
+						<!-- Table -->
+						<div class="overflow-hidden rounded-lg border">
+							<div class="relative w-full overflow-auto">
+								<table class="w-full caption-bottom text-sm">
+									<thead
+										class="sticky top-0 z-10 bg-gray-100 dark:bg-gray-800">
+										<tr>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												Drag
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												Header
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												Section Type
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												Status
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												<div class="w-full text-right">
+													Target
+												</div>
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												<div class="w-full text-right">
+													Limit
+												</div>
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												Reviewer
+											</th>
+											<th
+												class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+												Actions
+											</th>
+										</tr>
+									</thead>
+									<tbody class="[&_tr:last-child]:border-0">
+										<!-- Row 1 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Cover page
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Cover page</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="loader"
+														class="mr-1 h-3 w-3"></i>
+													In Process
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="18" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="5" />
+											</td>
+											<td class="p-4 align-middle">
+												Eddie Lake
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 2 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Table of contents
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Table of contents</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="check-circle-2"
+														class="mr-1 h-3 w-3 text-green-500"></i>
+													Done
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="29" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="24" />
+											</td>
+											<td class="p-4 align-middle">
+												Eddie Lake
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 3 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Executive summary
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Narrative</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="check-circle-2"
+														class="mr-1 h-3 w-3 text-green-500"></i>
+													Done
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="10" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="13" />
+											</td>
+											<td class="p-4 align-middle">
+												Eddie Lake
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 4 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Technical approach
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Narrative</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="check-circle-2"
+														class="mr-1 h-3 w-3 text-green-500"></i>
+													Done
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="27" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="23" />
+											</td>
+											<td class="p-4 align-middle">
+												Jamik Tashpulatov
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 5 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Design
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Narrative</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="loader"
+														class="mr-1 h-3 w-3"></i>
+													In Process
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="2" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="16" />
+											</td>
+											<td class="p-4 align-middle">
+												Jamik Tashpulatov
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 6 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Capabilities
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Narrative</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="loader"
+														class="mr-1 h-3 w-3"></i>
+													In Process
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="20" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="8" />
+											</td>
+											<td class="p-4 align-middle">
+												Jamik Tashpulatov
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 7 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Integration with existing
+													systems
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Narrative</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="loader"
+														class="mr-1 h-3 w-3"></i>
+													In Process
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="19" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="21" />
+											</td>
+											<td class="p-4 align-middle">
+												Jamik Tashpulatov
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 8 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Innovation and Advantages
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Narrative</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="check-circle-2"
+														class="mr-1 h-3 w-3 text-green-500"></i>
+													Done
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="25" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="26" />
+											</td>
+											<td class="p-4 align-middle">
+												<select class="h-8 w-40">
+													<option selected>
+														Assign reviewer
+													</option>
+													<option>Eddie Lake</option>
+													<option>
+														Jamik Tashpulatov
+													</option>
+												</select>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 9 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Overview of EMR's Innovative
+													Solutions
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Technical content</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="check-circle-2"
+														class="mr-1 h-3 w-3 text-green-500"></i>
+													Done
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="7" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="23" />
+											</td>
+											<td class="p-4 align-middle">
+												<select class="h-8 w-40">
+													<option selected>
+														Assign reviewer
+													</option>
+													<option>Eddie Lake</option>
+													<option>
+														Jamik Tashpulatov
+													</option>
+												</select>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+
+										<!-- Row 10 -->
+										<tr
+											class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+											<td class="p-4 align-middle">
+												<button
+													class="size-7 text-gray-500 hover:bg-transparent">
+													<i
+														data-lucide="grip-vertical"
+														class="size-3"></i>
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<div
+													class="flex items-center justify-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
+												</div>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="w-fit px-0 text-left text-foreground hover:underline">
+													Advanced Algorithms and Machine
+													Learning
+												</button>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+													>Narrative</span
+												>
+											</td>
+											<td class="p-4 align-middle">
+												<span
+													class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+													<i
+														data-lucide="check-circle-2"
+														class="mr-1 h-3 w-3 text-green-500"></i>
+													Done
+												</span>
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="30" />
+											</td>
+											<td class="p-4 align-middle">
+												<input
+													class="h-8 w-16 border-transparent bg-transparent text-right shadow-none hover:bg-gray-100/30 focus-visible:border focus-visible:bg-background"
+													value="28" />
+											</td>
+											<td class="p-4 align-middle">
+												<select class="h-8 w-40">
+													<option selected>
+														Assign reviewer
+													</option>
+													<option>Eddie Lake</option>
+													<option>
+														Jamik Tashpulatov
+													</option>
+												</select>
+											</td>
+											<td class="p-4 align-middle">
+												<button
+													class="flex size-8 text-gray-500 hover:bg-gray-100">
+													<i
+														data-lucide="more-vertical"
+														class="m-auto h-4 w-4"></i>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!-- Pagination -->
+						<div class="flex items-center justify-between px-4">
+							<div
+								class="hidden text-sm text-gray-500 dark:text-gray-400 lg:flex">
+								0 of 10 row(s) selected.
+							</div>
+							<div
+								class="flex w-full items-center gap-8 lg:w-fit">
+								<div
+									class="hidden items-center gap-2 lg:flex">
+									<label
+										for="rows-per-page"
+										class="text-sm font-medium"
+										>Rows per page</label
+									>
+									<select
+										id="rows-per-page"
+										class="h-8 w-20 rounded-md border">
+										<option>10</option>
+										<option>20</option>
+										<option>30</option>
+										<option>40</option>
+										<option>50</option>
+									</select>
+								</div>
+								<div
+									class="flex items-center justify-center text-sm font-medium">
+									Page 1 of 1
+								</div>
+								<div
+									class="ml-auto flex items-center gap-2 lg:ml-0">
+									<button
+										class="hidden h-8 w-8 items-center justify-center rounded-md border p-0 hover:bg-gray-100 dark:hover:bg-gray-800 lg:flex"
+										disabled>
+										<i
+											data-lucide="chevrons-left"
+											class="h-4 w-4"></i>
+									</button>
+									<button
+										class="flex h-8 w-8 items-center justify-center rounded-md border hover:bg-gray-100 dark:hover:bg-gray-800"
+										disabled>
+										<i
+											data-lucide="chevron-left"
+											class="h-4 w-4"></i>
+									</button>
+									<button
+										class="flex h-8 w-8 items-center justify-center rounded-md border hover:bg-gray-100 dark:hover:bg-gray-800">
+										<i
+											data-lucide="chevron-right"
+											class="h-4 w-4"></i>
+									</button>
+									<button
+										class="hidden h-8 w-8 items-center justify-center rounded-md border p-0 hover:bg-gray-100 dark:hover:bg-gray-800 lg:flex">
+										<i
+											data-lucide="chevrons-right"
+											class="h-4 w-4"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// Initialize Lucide icons
+			lucide.createIcons();
+
+			// Toggle mobile sidebar
+			const sidebarButton = document.querySelector(
+				".lg\\:hidden button"
+			);
+			const sidebarOverlay = document.querySelector(
+				".sidebar-overlay"
+			);
+			const sidebarContent = document.querySelector(
+				".sidebar-content"
+			);
+
+			sidebarButton.addEventListener("click", () => {
+				document.body.setAttribute("data-state", "open");
+			});
+
+			sidebarOverlay.addEventListener("click", () => {
+				document.body.setAttribute("data-state", "closed");
+			});
+
+			// Toggle user menu
+			const userMenuButton = document.getElementById(
+				"user-menu-button"
+			);
+			const userMenu = document.getElementById("user-menu");
+
+			userMenuButton.addEventListener("click", (e) => {
+				e.stopPropagation();
+				userMenu.classList.toggle("hidden");
+			});
+
+			// Close menu when clicking outside
+			document.addEventListener("click", () => {
+				userMenu.classList.add("hidden");
+			});
+		</script>
+	</body>
+</html>

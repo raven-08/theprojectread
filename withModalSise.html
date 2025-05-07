@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collapsible Sidebar with User Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    transitionProperty: {
+                        'width': 'width',
+                        'spacing': 'margin, padding',
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="group/sidebar relative h-full w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out hover:w-64 data-[collapsed=icon]:w-20 data-[collapsed=icon]:hover:w-64" data-collapsed="icon">
+            <!-- Sidebar Content -->
+            <div class="flex h-full flex-col">
+                <!-- Team Switcher -->
+                <div class="flex h-16 items-center px-4">
+                    <button class="flex items-center gap-2 text-sm font-medium">
+                        <span class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">T</span>
+                        <span class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden">Team Name</span>
+                        <svg class="h-4 w-4 group-data-[collapsed=icon]/sidebar:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Main Navigation -->
+                <nav class="flex-1 overflow-y-auto px-2 py-4">
+                    <div class="space-y-1">
+                        <a href="#" class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            <span class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden">Dashboard</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden">Calendar</span>
+                        </a>
+                        <a href="#" class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                            </svg>
+                            <span class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden">Documents</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <p class="px-3 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 group-data-[collapsed=icon]/sidebar:hidden">Projects</p>
+                        <div class="mt-2 space-y-1">
+                            <a href="#" class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+                                <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+                                <span class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden">Project Alpha</span>
+                            </a>
+                            <a href="#" class="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+                                <span class="h-2 w-2 rounded-full bg-green-500"></span>
+                                <span class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden">Project Beta</span>
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                
+                <!-- User Profile with Dropdown -->
+                <div class="p-4">
+                    <div class="relative">
+                        <button id="user-menu-button" class="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+                            <span class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">U</span>
+                            <div class="grid flex-1 text-left group-data-[collapsed=icon]/sidebar:hidden">
+                                <span class="truncate font-semibold">User Name</span>
+                                <span class="truncate text-xs text-gray-500 dark:text-gray-400">user@example.com</span>
+                            </div>
+                            <i data-lucide="chevrons-up-down" class="ml-auto size-4 group-data-[collapsed=icon]/sidebar:hidden"></i>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="user-menu" class="hidden absolute bottom-full mb-2 left-0 w-full min-w-56 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900 z-10">
+                            <div class="p-2">
+                                <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                                    <span class="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">U</span>
+                                    <div class="grid flex-1 text-left text-sm leading-tight">
+                                        <span class="truncate font-semibold">User Name</span>
+                                        <span class="truncate text-xs text-gray-500 dark:text-gray-400">user@example.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gray-200 dark:bg-gray-800"></div>
+                            <div class="p-1">
+                                <div class="py-1">
+                                    <a href="#" class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <i data-lucide="sparkles" class="size-4"></i>
+                                        Upgrade to Pro
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gray-200 dark:bg-gray-800"></div>
+                            <div class="p-1">
+                                <div class="py-1">
+                                    <a href="#" class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <i data-lucide="badge-check" class="size-4"></i>
+                                        Account
+                                    </a>
+                                    <a href="#" class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <i data-lucide="credit-card" class="size-4"></i>
+                                        Billing
+                                    </a>
+                                    <a href="#" class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                        <i data-lucide="bell" class="size-4"></i>
+                                        Notifications
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gray-200 dark:bg-gray-800"></div>
+                            <div class="p-1">
+                                <a href="#" class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                    <i data-lucide="log-out" class="size-4"></i>
+                                    Log out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Collapse Button -->
+            <button class="absolute -right-3 top-4 hidden h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm transition-all hover:bg-gray-100 group-hover/sidebar:flex dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
+                    onclick="document.querySelector('[data-collapsed]').dataset.collapsed = document.querySelector('[data-collapsed]').dataset.collapsed === 'icon' ? 'false' : 'icon'">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                <span class="sr-only">Toggle sidebar</span>
+            </button>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex flex-1 flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
+                <div class="flex items-center gap-2 px-4">
+                    <button class="-ml-1 flex h-9 w-9 items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                            onclick="document.querySelector('[data-collapsed]').dataset.collapsed = document.querySelector('[data-collapsed]').dataset.collapsed === 'icon' ? 'false' : 'icon'">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <div class="h-4 w-px bg-gray-200 dark:bg-gray-800 mr-2"></div>
+                    <nav class="flex" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                            <li class="inline-flex items-center hidden md:block">
+                                <a href="#" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                                    Building Your Application
+                                </a>
+                            </li>
+                            <li class="hidden md:block">
+                                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                </svg>
+                            </li>
+                            <li class="inline-flex items-center">
+                                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Data Fetching</span>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </header>
+            
+            <!-- Content -->
+            <div class=" flex flex-1 flex-col gap-4 p-4 pt-0 overflow-y-auto">
+                <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+                    <div class="aspect-video rounded-xl bg-gray-100 dark:bg-gray-800/50"></div>
+                    <div class="aspect-video rounded-xl bg-gray-100 dark:bg-gray-800/50"></div>
+                    <div class="aspect-video rounded-xl bg-gray-100 dark:bg-gray-800/50"></div>
+                </div>
+                <div class="min-h-[100vh] flex-1 rounded-xl bg-gray-100 dark:bg-gray-800/50 md:min-h-min"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Toggle user menu
+        const userMenuButton = document.getElementById('user-menu-button');
+        const userMenu = document.getElementById('user-menu');
+        
+        userMenuButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userMenu.classList.toggle('hidden');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', () => {
+            userMenu.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

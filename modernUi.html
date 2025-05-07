@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Modern Dashboard</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script src="https://unpkg.com/lucide@latest"></script>
+		<script>
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						transitionProperty: {
+							width: "width",
+							spacing: "margin, padding",
+						},
+						colors: {
+							primary: {
+								DEFAULT: "hsl(var(--primary))",
+								foreground: "hsl(var(--primary-foreground))",
+							},
+						},
+					},
+				},
+			};
+		</script>
+		<style>
+			[data-state="open"] .sidebar-overlay {
+				opacity: 1;
+				pointer-events: auto;
+			}
+			.sidebar-overlay {
+				transition: opacity 0.2s ease;
+			}
+			.card-hover-effect {
+				transition: all 0.3s ease;
+			}
+			.card-hover-effect:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+			}
+			.table-row-hover:hover {
+				background-color: hsl(var(--accent) / 0.5);
+			}
+			.progress-bar {
+				height: 6px;
+				border-radius: 3px;
+			}
+		</style>
+	</head>
+	<body
+		class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-50">
+		<div class="flex h-screen overflow-hidden">
+			<!-- Mobile Sidebar Overlay -->
+			<div
+				class="sidebar-overlay fixed inset-0 z-40 bg-black/50 opacity-0 pointer-events-none lg:hidden"></div>
+
+			<!-- Sidebar -->
+			<div
+				class="group/sidebar relative h-full w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 ease-in-out hover:w-64 data-[collapsed=icon]:w-20 data-[collapsed=icon]:hover:w-64 bg-white dark:bg-gray-950"
+				data-collapsed="icon">
+				<!-- Sidebar Content -->
+				<div class="flex h-full flex-col">
+					<!-- Team Switcher -->
+					<div
+						class="flex h-16 items-center px-4 border-b border-gray-200 dark:border-gray-800">
+						<button
+							class="flex items-center gap-2 text-sm font-medium">
+							<span
+								class="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-500 to-blue-300 flex items-center justify-center text-white"
+								>T</span
+							>
+							<span
+								class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden"
+								>Team Name</span
+							>
+							<i
+								data-lucide="chevron-down"
+								class="h-4 w-4 group-data-[collapsed=icon]/sidebar:hidden"></i>
+						</button>
+					</div>
+
+					<!-- Main Navigation -->
+					<nav class="flex-1 overflow-y-auto px-2 py-4">
+						<div class="space-y-1">
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium bg-primary/10 text-primary dark:bg-primary/20">
+								<i
+									data-lucide="layout-dashboard"
+									class="h-5 w-5"></i>
+								<span
+									class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden"
+									>Dashboard</span
+								>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i data-lucide="calendar" class="h-5 w-5"></i>
+								<span
+									class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden"
+									>Calendar</span
+								>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i
+									data-lucide="file-text"
+									class="h-5 w-5"></i>
+								<span
+									class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden"
+									>Documents</span
+								>
+							</a>
+							<a
+								href="#"
+								class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<i
+									data-lucide="bar-chart-2"
+									class="h-5 w-5"></i>
+								<span
+									class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden"
+									>Analytics</span
+								>
+							</a>
+						</div>
+
+						<div class="mt-8">
+							<p
+								class="px-3 text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 group-data-[collapsed=icon]/sidebar:hidden">
+								Projects
+							</p>
+							<div class="mt-2 space-y-1">
+								<a
+									href="#"
+									class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+									<span
+										class="h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+									<span
+										class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden"
+										>Project Alpha</span
+									>
+								</a>
+								<a
+									href="#"
+									class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+									<span
+										class="h-2.5 w-2.5 rounded-full bg-green-500"></span>
+									<span
+										class="whitespace-nowrap group-data-[collapsed=icon]/sidebar:hidden"
+										>Project Beta</span
+									>
+								</a>
+							</div>
+						</div>
+					</nav>
+
+					<!-- User Profile with Dropdown -->
+					<div
+						class="p-4 border-t border-gray-200 dark:border-gray-800">
+						<div class="relative">
+							<button
+								id="user-menu-button"
+								class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800">
+								<span
+									class="h-8 w-8 rounded-full bg-gradient-to-tr from-purple-500 to-pink-400 flex items-center justify-center text-white"
+									>JD</span
+								>
+								<div
+									class="grid flex-1 text-left group-data-[collapsed=icon]/sidebar:hidden">
+									<span class="truncate font-semibold"
+										>John Doe</span
+									>
+									<span
+										class="truncate text-xs text-gray-500 dark:text-gray-400"
+										>admin@example.com</span
+									>
+								</div>
+								<i
+									data-lucide="chevrons-up-down"
+									class="ml-auto size-4 group-data-[collapsed=icon]/sidebar:hidden"></i>
+							</button>
+
+							<!-- Dropdown Menu -->
+							<div
+								id="user-menu"
+								class="hidden absolute bottom-full mb-2 left-0 w-full min-w-56 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900 z-10">
+								<div class="p-2">
+									<div
+										class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+										<span
+											class="h-8 w-8 rounded-full bg-gradient-to-tr from-purple-500 to-pink-400 flex items-center justify-center text-white"
+											>JD</span
+										>
+										<div
+											class="grid flex-1 text-left text-sm leading-tight">
+											<span class="truncate font-semibold"
+												>John Doe</span
+											>
+											<span
+												class="truncate text-xs text-gray-500 dark:text-gray-400"
+												>admin@example.com</span
+											>
+										</div>
+									</div>
+								</div>
+								<div
+									class="h-px bg-gray-200 dark:bg-gray-800"></div>
+								<div class="p-1">
+									<div class="py-1">
+										<a
+											href="#"
+											class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+											<i
+												data-lucide="user"
+												class="size-4"></i>
+											Profile
+										</a>
+										<a
+											href="#"
+											class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+											<i
+												data-lucide="settings"
+												class="size-4"></i>
+											Settings
+										</a>
+									</div>
+								</div>
+								<div
+									class="h-px bg-gray-200 dark:bg-gray-800"></div>
+								<div class="p-1">
+									<a
+										href="#"
+										class="flex items-center gap-2 rounded px-2 py-1.5 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+										<i
+											data-lucide="log-out"
+											class="size-4"></i>
+										Sign out
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Collapse Button -->
+				<button
+					class="absolute -right-3 top-4 hidden h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white shadow-sm transition-all hover:bg-gray-100 group-hover/sidebar:flex dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
+					onclick="document.querySelector('[data-collapsed]').dataset.collapsed = document.querySelector('[data-collapsed]').dataset.collapsed === 'icon' ? 'false' : 'icon'">
+					<i data-lucide="chevron-left" class="h-4 w-4"></i>
+					<span class="sr-only">Toggle sidebar</span>
+				</button>
+			</div>
+
+			<!-- Main Content -->
+			<div class="flex flex-1 flex-col overflow-hidden">
+				<!-- Header -->
+				<header
+					class="flex h-16 shrink-0 items-center gap-2 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+					<div class="flex items-center gap-2 px-4">
+						<button
+							class="lg:hidden -ml-1 flex h-9 w-9 items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+							onclick="document.querySelector('[data-collapsed]').dataset.collapsed = document.querySelector('[data-collapsed]').dataset.collapsed === 'icon' ? 'false' : 'icon'">
+							<i data-lucide="menu" class="h-5 w-5"></i>
+						</button>
+						<h1 class="text-lg font-semibold">Dashboard</h1>
+					</div>
+				</header>
+
+				<!-- Content -->
+				<div
+					class="flex flex-1 flex-col gap-6 p-6 overflow-y-auto">
+					<!-- Metric Cards -->
+					<div
+						class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+						<!-- Card 1 -->
+						<div
+							class="card-hover-effect rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+							<div class="flex items-center justify-between">
+								<div>
+									<p
+										class="text-sm font-medium text-gray-500 dark:text-gray-400">
+										Total Revenue
+									</p>
+									<h3 class="mt-1 text-2xl font-semibold">
+										$12,345
+									</h3>
+								</div>
+								<div
+									class="rounded-lg bg-blue-50 dark:bg-blue-900/30 p-3">
+									<i
+										data-lucide="dollar-sign"
+										class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+								</div>
+							</div>
+							<div class="mt-4 flex items-center">
+								<span
+									class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-400">
+									<i
+										data-lucide="trending-up"
+										class="mr-1 h-3 w-3"></i>
+									12.5%
+								</span>
+								<span
+									class="ml-2 text-sm text-gray-500 dark:text-gray-400"
+									>vs last month</span
+								>
+							</div>
+						</div>
+
+						<!-- Card 2 -->
+						<div
+							class="card-hover-effect rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+							<div class="flex items-center justify-between">
+								<div>
+									<p
+										class="text-sm font-medium text-gray-500 dark:text-gray-400">
+										New Customers
+									</p>
+									<h3 class="mt-1 text-2xl font-semibold">
+										1,234
+									</h3>
+								</div>
+								<div
+									class="rounded-lg bg-purple-50 dark:bg-purple-900/30 p-3">
+									<i
+										data-lucide="users"
+										class="h-6 w-6 text-purple-600 dark:text-purple-400"></i>
+								</div>
+							</div>
+							<div class="mt-4 flex items-center">
+								<span
+									class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-400">
+									<i
+										data-lucide="trending-up"
+										class="mr-1 h-3 w-3"></i>
+									8.2%
+								</span>
+								<span
+									class="ml-2 text-sm text-gray-500 dark:text-gray-400"
+									>vs last month</span
+								>
+							</div>
+						</div>
+
+						<!-- Card 3 -->
+						<div
+							class="card-hover-effect rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+							<div class="flex items-center justify-between">
+								<div>
+									<p
+										class="text-sm font-medium text-gray-500 dark:text-gray-400">
+										Active Projects
+									</p>
+									<h3 class="mt-1 text-2xl font-semibold">
+										24
+									</h3>
+								</div>
+								<div
+									class="rounded-lg bg-orange-50 dark:bg-orange-900/30 p-3">
+									<i
+										data-lucide="folder"
+										class="h-6 w-6 text-orange-600 dark:text-orange-400"></i>
+								</div>
+							</div>
+							<div class="mt-4 flex items-center">
+								<span
+									class="inline-flex items-center rounded-full bg-red-50 dark:bg-red-900/20 px-2.5 py-0.5 text-xs font-medium text-red-700 dark:text-red-400">
+									<i
+										data-lucide="trending-down"
+										class="mr-1 h-3 w-3"></i>
+									5.5%
+								</span>
+								<span
+									class="ml-2 text-sm text-gray-500 dark:text-gray-400"
+									>vs last month</span
+								>
+							</div>
+						</div>
+
+						<!-- Card 4 -->
+						<div
+							class="card-hover-effect rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+							<div class="flex items-center justify-between">
+								<div>
+									<p
+										class="text-sm font-medium text-gray-500 dark:text-gray-400">
+										Tasks Completed
+									</p>
+									<h3 class="mt-1 text-2xl font-semibold">
+										156
+									</h3>
+								</div>
+								<div
+									class="rounded-lg bg-green-50 dark:bg-green-900/30 p-3">
+									<i
+										data-lucide="check-circle"
+										class="h-6 w-6 text-green-600 dark:text-green-400"></i>
+								</div>
+							</div>
+							<div class="mt-4 flex items-center">
+								<span
+									class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:text-green-400">
+									<i
+										data-lucide="trending-up"
+										class="mr-1 h-3 w-3"></i>
+									18.3%
+								</span>
+								<span
+									class="ml-2 text-sm text-gray-500 dark:text-gray-400"
+									>vs last month</span
+								>
+							</div>
+						</div>
+					</div>
+
+					<!-- Modern Table -->
+					<div
+						class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-sm">
+						<div
+							class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+							<h2 class="text-lg font-semibold">
+								Recent Projects
+							</h2>
+							<button
+								class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2">
+								<i
+									data-lucide="plus"
+									class="mr-2 h-4 w-4"></i>
+								Add Project
+							</button>
+						</div>
+						<div class="relative w-full overflow-auto">
+							<table class="w-full caption-bottom text-sm">
+								<thead
+									class="border-b border-gray-200 dark:border-gray-800">
+									<tr class="hover:bg-transparent">
+										<th
+											class="h-12 px-6 text-left align-middle font-medium text-gray-500 dark:text-gray-400">
+											Project
+										</th>
+										<th
+											class="h-12 px-6 text-left align-middle font-medium text-gray-500 dark:text-gray-400">
+											Status
+										</th>
+										<th
+											class="h-12 px-6 text-left align-middle font-medium text-gray-500 dark:text-gray-400">
+											Progress
+										</th>
+										<th
+											class="h-12 px-6 text-left align-middle font-medium text-gray-500 dark:text-gray-400">
+											Due Date
+										</th>
+										<th
+											class="h-12 px-6 text-left align-middle font-medium text-gray-500 dark:text-gray-400">
+											Team
+										</th>
+										<th
+											class="h-12 px-6 text-right align-middle font-medium text-gray-500 dark:text-gray-400">
+											Actions
+										</th>
+									</tr>
+								</thead>
+								<tbody class="[&_tr:last-child]:border-0">
+									<!-- Row 1 -->
+									<tr
+										class="table-row-hover border-b border-gray-200 dark:border-gray-800 transition-colors">
+										<td
+											class="p-4 px-6 align-middle font-medium">
+											Website Redesign
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<span
+												class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-400">
+												<i
+													data-lucide="check-circle"
+													class="mr-1.5 h-3 w-3"></i>
+												On Track
+											</span>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex items-center gap-3">
+												<div class="w-full max-w-[200px]">
+													<div
+														class="progress-bar w-full bg-gray-200 dark:bg-gray-800">
+														<div
+															class="progress-bar h-full rounded-full bg-green-500"
+															style="width: 75%"></div>
+													</div>
+												</div>
+												<span class="text-sm font-medium"
+													>75%</span
+												>
+											</div>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											Jun 15, 2023
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex -space-x-2">
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-blue-500 to-blue-300 text-xs font-medium text-white"
+													>JD</span
+												>
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-purple-500 to-pink-400 text-xs font-medium text-white"
+													>AS</span
+												>
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs font-medium text-gray-700 dark:text-gray-300"
+													>+2</span
+												>
+											</div>
+										</td>
+										<td
+											class="p-4 px-6 align-middle text-right">
+											<button
+												class="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+												<i
+													data-lucide="more-horizontal"
+													class="h-4 w-4"></i>
+											</button>
+										</td>
+									</tr>
+
+									<!-- Row 2 -->
+									<tr
+										class="table-row-hover border-b border-gray-200 dark:border-gray-800 transition-colors">
+										<td
+											class="p-4 px-6 align-middle font-medium">
+											Mobile App Development
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<span
+												class="inline-flex items-center rounded-full bg-yellow-50 dark:bg-yellow-900/20 px-3 py-1 text-xs font-medium text-yellow-700 dark:text-yellow-400">
+												<i
+													data-lucide="alert-triangle"
+													class="mr-1.5 h-3 w-3"></i>
+												At Risk
+											</span>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex items-center gap-3">
+												<div class="w-full max-w-[200px]">
+													<div
+														class="progress-bar w-full bg-gray-200 dark:bg-gray-800">
+														<div
+															class="progress-bar h-full rounded-full bg-yellow-500"
+															style="width: 45%"></div>
+													</div>
+												</div>
+												<span class="text-sm font-medium"
+													>45%</span
+												>
+											</div>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											Jul 1, 2023
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex -space-x-2">
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-green-500 to-green-300 text-xs font-medium text-white"
+													>MK</span
+												>
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-orange-500 to-yellow-400 text-xs font-medium text-white"
+													>TL</span
+												>
+											</div>
+										</td>
+										<td
+											class="p-4 px-6 align-middle text-right">
+											<button
+												class="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+												<i
+													data-lucide="more-horizontal"
+													class="h-4 w-4"></i>
+											</button>
+										</td>
+									</tr>
+
+									<!-- Row 3 -->
+									<tr
+										class="table-row-hover border-b border-gray-200 dark:border-gray-800 transition-colors">
+										<td
+											class="p-4 px-6 align-middle font-medium">
+											Marketing Campaign
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<span
+												class="inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-900/20 px-3 py-1 text-xs font-medium text-blue-700 dark:text-blue-400">
+												<i
+													data-lucide="clock"
+													class="mr-1.5 h-3 w-3"></i>
+												In Progress
+											</span>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex items-center gap-3">
+												<div class="w-full max-w-[200px]">
+													<div
+														class="progress-bar w-full bg-gray-200 dark:bg-gray-800">
+														<div
+															class="progress-bar h-full rounded-full bg-blue-500"
+															style="width: 60%"></div>
+													</div>
+												</div>
+												<span class="text-sm font-medium"
+													>60%</span
+												>
+											</div>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											Jun 30, 2023
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex -space-x-2">
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-purple-500 to-pink-400 text-xs font-medium text-white"
+													>AR</span
+												>
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs font-medium text-gray-700 dark:text-gray-300"
+													>+3</span
+												>
+											</div>
+										</td>
+										<td
+											class="p-4 px-6 align-middle text-right">
+											<button
+												class="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+												<i
+													data-lucide="more-horizontal"
+													class="h-4 w-4"></i>
+											</button>
+										</td>
+									</tr>
+
+									<!-- Row 4 -->
+									<tr
+										class="table-row-hover border-b border-gray-200 dark:border-gray-800 transition-colors">
+										<td
+											class="p-4 px-6 align-middle font-medium">
+											Product Launch
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<span
+												class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/20 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-400">
+												<i
+													data-lucide="check-circle"
+													class="mr-1.5 h-3 w-3"></i>
+												On Track
+											</span>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex items-center gap-3">
+												<div class="w-full max-w-[200px]">
+													<div
+														class="progress-bar w-full bg-gray-200 dark:bg-gray-800">
+														<div
+															class="progress-bar h-full rounded-full bg-green-500"
+															style="width: 85%"></div>
+													</div>
+												</div>
+												<span class="text-sm font-medium"
+													>85%</span
+												>
+											</div>
+										</td>
+										<td class="p-4 px-6 align-middle">
+											Aug 15, 2023
+										</td>
+										<td class="p-4 px-6 align-middle">
+											<div class="flex -space-x-2">
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-red-500 to-orange-400 text-xs font-medium text-white"
+													>PD</span
+												>
+												<span
+													class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-xs font-medium text-gray-700 dark:text-gray-300"
+													>+4</span
+												>
+											</div>
+										</td>
+										<td
+											class="p-4 px-6 align-middle text-right">
+											<button
+												class="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+												<i
+													data-lucide="more-horizontal"
+													class="h-4 w-4"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div
+							class="px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between">
+							<div
+								class="text-sm text-gray-500 dark:text-gray-400">
+								Showing <span class="font-medium">1</span> to
+								<span class="font-medium">4</span> of
+								<span class="font-medium">12</span> projects
+							</div>
+							<div class="flex items-center gap-2">
+								<button
+									class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+									<i
+										data-lucide="chevron-left"
+										class="h-4 w-4"></i>
+								</button>
+								<button
+									class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 bg-primary text-primary-foreground text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90">
+									1
+								</button>
+								<button
+									class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+									2
+								</button>
+								<button
+									class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+									3
+								</button>
+								<button
+									class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground">
+									<i
+										data-lucide="chevron-right"
+										class="h-4 w-4"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// Initialize Lucide icons
+			lucide.createIcons();
+
+			// Toggle user menu
+			const userMenuButton = document.getElementById(
+				"user-menu-button"
+			);
+			const userMenu = document.getElementById("user-menu");
+
+			userMenuButton.addEventListener("click", (e) => {
+				e.stopPropagation();
+				userMenu.classList.toggle("hidden");
+			});
+
+			// Close menu when clicking outside
+			document.addEventListener("click", () => {
+				userMenu.classList.add("hidden");
+			});
+
+			// Toggle mobile sidebar overlay
+			const mobileSidebarButton = document.querySelector(
+				".lg\\:hidden button"
+			);
+			const sidebarOverlay = document.querySelector(
+				".sidebar-overlay"
+			);
+
+			mobileSidebarButton.addEventListener("click", () => {
+				document.body.setAttribute("data-state", "open");
+			});
+
+			sidebarOverlay.addEventListener("click", () => {
+				document.body.setAttribute("data-state", "closed");
+			});
+		</script>
+	</body>
+</html>
